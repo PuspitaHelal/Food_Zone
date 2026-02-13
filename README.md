@@ -1,20 +1,22 @@
+
+
 # Project Images
 
-This folder contains images used in the project. Below are the images included:
+This folder contains the following images:
 
 ## Images
 
-### pic1
-![pic1](./pic1.jpeg)
+![Image 1](./Pic/pic1.jpeg)
+*Image 1*
 
-### pic2
-![pic2](./pic2.jpeg)
+![Image 2](./Pic/pic2.jpeg)
+*Image 2*
 
-### pic3
-![pic3](./pic3.jpeg)
+![Image 3](./Pic/pic3.jpeg)
+*Image 3*
 
-### pic4
-![pic4](./pic4.jpeg)
+![Image 4](./Pic/pic4.jpeg)
+*Image 4*
 
 ---
 
