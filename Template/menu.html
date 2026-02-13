@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block class %}class="sub_page"{% endblock class %}
+{% block menu_status %}active{% endblock menu_status %}
+
+{% block main %}
+
+<!-- food section -->
+<section class="food_section layout_padding-bottom">
+  <div class="container">
+    <!-- Heading -->
+    <div class="heading_container heading_center">
+      <h2>Our Menu</h2>
+    </div>
+
+    <!-- Category Filters -->
+    <ul class="filters_menu">
+      <li class="active" data-filter="*">All</li>
+      {% for i in list %}
+      <li data-filter=".{{ i.Category_name }}">{{ i.Category_name }}</li>
+      {% endfor %}
+    </ul>
+
+    <!-- Menu Items Grid -->
+    <div class="filters-content">
+      <div class="row grid">
+        {% for j in items %}
+        <div class="col-sm-6 col-lg-4 all {{ j.Category }}">
+          <div class="box">
+            <div>
+              <!-- Image -->
+              <div class="img-box">
+                <img src="/media/{{ j.Image }}" alt="{{ j.Item_name }}">
+              </div>
+              
+              <!-- Details -->
+              <div class="detail-box">
+                <h5>{{ j.Item_name }}</h5>
+                <p>{{ j.description }}</p>
+                <div class="options">
+                  <!-- Price in Taka -->
+                  <h6>৳{{ j.Price }}</h6>
+
+                  <!-- Add to Cart Button -->
+                  <button class="btn btn-success add-to-cart" 
+                          data-item-id="{{ j.id }}" 
+                          data-item-name="{{ j.Item_name }}" 
+                          data-item-price="{{ j.Price }}">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- View More Button -->
+    <div class="btn-box text-center mt-4">
+      <a href="#" class="btn btn-primary">View More</a>
+    </div>
+  </div>
+</section>
+<!-- end food section -->
+
+<!-- Add to Cart Script -->
+<script>
+  document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', function() {
+      const itemId = this.getAttribute('data-item-id');
+      const itemName = this.getAttribute('data-item-name');
+      const itemPrice = this.getAttribute('data-item-price');
+
+      fetch('/add-to-cart/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-CSRFTOKEN': '{{ csrf_token }}'
+        },
+        body: `item_id=${itemId}`
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          alert(data.message); // Just shows a confirmation alert
+        } else {
+          alert('Failed to add item to cart.');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    });
+  });
+</script>
+
+{% endblock main %}
